@@ -1,13 +1,14 @@
 var amqp = require('amqplib');
+var config = require("./config")
 
-var connected = amqp.connect("amqp://esticade:esticade@impact.ccat.eu:5672/esticade").then(null, console.warn);
+var connected = amqp.connect(config.connectionURL).then(null, console.warn);
 
 function getChannel(){
     return connected.then(function (conn) {
         var channelCreated = conn.createChannel();
 
         channelCreated.then(function (channel) {
-            channel.assertExchange("events", "topic", {durable: true, autoDelete: false})
+            channel.assertExchange(config.exchange, "topic", {durable: true, autoDelete: false})
         });
 
         return channelCreated;

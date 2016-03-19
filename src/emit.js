@@ -1,8 +1,10 @@
+var config = require("./config");
+
 function emit(event, haveChan) {
     var routingKey = event.correlationId + "." + event.name;
     return haveChan.then(function (channel) {
         return channel.publish(
-            "events",
+            config.exchange,
             routingKey,
             new Buffer(JSON.stringify(event)),
             {contentType: "application/json"}

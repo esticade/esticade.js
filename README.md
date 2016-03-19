@@ -36,6 +36,8 @@ A simple library for creating interconnecting services using rabbitmq on the bac
 
 # Quick start
 
+Install RabbitMQ on the machine and create following scripts:
+
 Service 1 (Adding Service):
 ```
 var service = require("esticade")("Adding Service");
@@ -75,3 +77,27 @@ service.emitChain("AddNumbers", {firstNumber: 10, secondNumber: 20})
     .execute();
 ```
 
+# Configuration
+
+By default the library will try to connect to localhost with user and pass guest/guest. This is the default configuration
+for RabbitMQ. If you want to override that, you can override it with a configuration file in any of following locations.
+
+- A file pointed to by ESTICADERC environment variable
+- esticade.json in current working folder or any parent folder.
+- /etc/esticade/esticaderc
+- .esticaderc in current user home directory
+
+If any of those files is located in that order, it's contents are read and used for configuration. It should contain
+JSON object with any of the following properties: 
+
+- `connectionURL` - Default: `amqp://guest:guest@localhost/`
+- `exchange` - Default `events`
+
+Example:
+
+```
+{ 
+    "connectionURL": "amqp://user:pass@example.com/vhost"
+    "exchange": "EventNetwork"
+}
+```
