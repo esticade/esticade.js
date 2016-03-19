@@ -1,0 +1,7 @@
+TODO
+~~~~
+
+- Do timeout handling
+- Ping handler
+- Connection handling
+- Channel handling

@@ -1,0 +1,34 @@
+{
+  "name": "esticade",
+  "version": "1.0.0",
+  "description": "Fast and simple pubsub library for microservices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esticade/esticade.js.git"
+  },
+  "keywords": [
+    "pubsub",
+    "microservice",
+    "simple",
+    "rabbitmq"
+  ],
+  "author": "Jaan Pullerits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esticade/esticade.js/issues"
+  },
+  "homepage": "https://github.com/esticade/esticade.js#readme",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "amqplib": "^0.4.1",
+    "node-uuid": "^1.4.7",
+    "underscore": "^1.8.3",
+    "when": "^3.7.7"
+  }
+}
