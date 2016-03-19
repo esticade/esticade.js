@@ -30,7 +30,7 @@ function emission(event, channelPromise){
 
             emitted.then(function () {
                 setTimeout(function () {
-                    channelPromise.then((channel) => channel.close());
+                    channelPromise.then((channel) => channel.close()).catch(() => {});
                     if(timeoutHandler) timeoutHandler();
                 }, timeout)
             });

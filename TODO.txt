@@ -1,7 +1,7 @@
 TODO
 ~~~~
 
-- Do timeout handling
+- Configuration
 - Ping handler
 - Connection handling
 - Channel handling

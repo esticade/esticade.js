@@ -12,11 +12,11 @@ service.emitChain("GetNumberOfCats")
         setTimeout(() => {
             ev.emit("NumberOfCats", "[Should not be seen because of timeout]")
                 .catch(err => { console.log("Failed to emit event because chain timed out") })
-        }, 1);
+        }, 2000);
     })
     .on("NumberOfCats", (ev) => {
         console.log("We have " + ev.body + " cats");
-        // service.shutdown();
+        setTimeout(() => service.shutdown(), 3000);
     })
     .timeOut(1000, () => console.log("Chain timed out"))
     .execute();
