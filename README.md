@@ -46,7 +46,7 @@ service.on("AddNumber", (ev) => ev.emit("AddedNumbers", {
     firstNumber: ev.body.firstNumber,
     secondNumber: ev.body.secondNumber
     result: ev.body.firstNumber + ev.body.secondNumber
-});
+}));
 ```
 
 Service 2 (Number generator):
