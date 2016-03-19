@@ -1,4 +1,4 @@
-var esticade = require("./index");
+var esticade = require("./../index");
 var service = esticade("Test Service");
 
 service.on("TestEvent", ev => console.log("Callback triggered", ev.name))

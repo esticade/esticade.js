@@ -12,7 +12,8 @@ A simple library for creating interconnecting services using rabbitmq on the bac
 
 ## Service object
 
-- `on(eventName, callback)` - Will register event listener. Callback will be called with an `Event` object as the only argument. Will return promise that is fulfilled once the handler is registered.
+- `on(eventName, callback)` - Will register event listener. Callback will be called with an `Event` object as the only argument. If there are two or more instances of the same service running, the events will be equally divided between all the instances. If this is not a desired behaviour use `alwaysOn`. Will return promise that is fulfilled once the handler is registered.
+- `alwaysOn(eventName, callback)` - Same as `on`, except different instances of the same services will all return the event.   
 - `emit(eventName, payload)` - Will emit event to the event network. Returns promise that is fulfilled once the event is emitted.
 - `emitChain(eventName, payload)` - Will create an emit chain, allowing events caused by this event to be listened to. Will return `EventChain` object. Note that the event is not triggered before `execute` is called on the event chain.
 
@@ -23,7 +24,6 @@ A simple library for creating interconnecting services using rabbitmq on the bac
 - `correlationId` - Will be same on all the events in the event chain.
 - `eventId` - Unique identifier for the event
 - `parentId` - Id of the event causing this event in the current chain.
-
 - `emit(eventName, payload)` - Will emit event to the event network. Returns promise which is fulfilled once the event is emitted.
 
 ## EmitChain object

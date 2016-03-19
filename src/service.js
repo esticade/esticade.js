@@ -14,6 +14,10 @@ module.exports = function(serviceName){
     return {
         on: function(eventName, callback){
             var channel = transport.getChannel();
+            return on(channel, "*." + eventName, callback, serviceName + "-" + eventName)
+        },
+        alwaysOn: function(eventName, callback){
+            var channel = transport.getChannel();
             return on(channel, "*." + eventName, callback)
         },
         emit: function(eventName, payload){
