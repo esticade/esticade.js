@@ -4,6 +4,8 @@ var on = require("./on");
 
 function emission(event, channelPromise){
     var dependencies = [];
+    var timeout = 60000;
+    var timeoutHandler;
 
     var emission = {
         event: event,
@@ -13,11 +15,27 @@ function emission(event, channelPromise){
             );
             return emission;
         },
-        timeOut: function(){},
+        timeOut: function(a, b){
+            if(typeof a == "function") timeoutHandler = a;
+            if(typeof a == "number") timeout = a;
+            if(typeof b == "function") timeoutHandler = b;
+            if(typeof b == "number") timeout = b;
+
+            return emission;
+        },
         execute: function(){
-            return when.all(dependencies).then(function(){
-                emit(event, channelPromise);
+            var emitted = when.all(dependencies).then(function(){
+                return emit(event, channelPromise);
             });
+
+            emitted.then(function () {
+                setTimeout(function () {
+                    channelPromise.then((channel) => channel.close());
+                    if(timeoutHandler) timeoutHandler();
+                }, timeout)
+            });
+
+            return emitted;
         }
     };
 
