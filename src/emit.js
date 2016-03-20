@@ -7,7 +7,7 @@ function emit(event, haveChan) {
             config.exchange,
             routingKey,
             new Buffer(JSON.stringify(event)),
-            {contentType: "application/json"}
+            {contentType: "application/json", persistent: true}
         )
     })
 }
