@@ -1,4 +1,4 @@
-var esticade = require("esticade");
+var esticade = require("../index.js");
 
 
 // MULTIPLICATION SERVICE

@@ -18,6 +18,7 @@ for most tasks.
 - `alwaysOn(eventName, callback)` - Same as `on`, except different instances of the same services will all return the event.   
 - `emit(eventName, payload)` - Will emit event to the event network. Returns promise that is fulfilled once the event is emitted.
 - `emitChain(eventName, payload)` - Will create an emit chain, allowing events caused by this event to be listened to. Will return `EventChain` object. Note that the event is not triggered before `execute` is called on the event chain.
+- `shutdown()` - Will shut the entire service down, if there is nothing else keeping process alive, the process will terminate.
 
 ## Event object
 
@@ -72,6 +73,7 @@ var service = require("esticade")("Request Service");
 service.emitChain("MultiplyNumbers", {a: 10, b: 20})
     .on("MultipliedNumbers", (ev) => {
         console.log(ev.body.a + " + " + ev.body.b + " = " + ev.body.result)
+        service.shutdown();
     })
     .execute();
 ```
