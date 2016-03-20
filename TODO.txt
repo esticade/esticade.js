@@ -1,6 +1,5 @@
 TODO
 ~~~~
 
+
 - Ping handler
-- Connection handling
-- Channel handling
