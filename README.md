@@ -92,6 +92,11 @@ JSON object with any of the following properties:
 
 - `connectionURL` - Default: `amqp://guest:guest@localhost/`
 - `exchange` - Default `events`
+- `engraved` - Default `false`. Will make named queues (those registered with service.on()) durable. We suggest you leave this
+option to `false` during development as otherwise you will get a lot of permanent queues in the rabbitmq server. You should
+turn this on in production though, as it will make sure no messages get lost when service restarts. Turning it off when it
+has been turned on might cause errors as the durable queues are not redefined as non durable ones automatically. You have
+to manually delete the queues from RabbitMQ.
 
 Example:
 

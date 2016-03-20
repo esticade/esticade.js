@@ -8,7 +8,8 @@ module.exports = getConfig();
 function getConfig() {
     var config = {
         connectionURL: "amqp://guest:guest@localhost/",
-        exchange: "events"
+        exchange: "events",
+        engraved: false
     };
 
     var configFile = getConfigFile();

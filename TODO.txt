@@ -2,4 +2,4 @@ TODO
 ~~~~
 
 - Ping handler
-- Durable queues and persistant messages
+
