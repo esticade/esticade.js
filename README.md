@@ -1,6 +1,8 @@
 # Esticade
  
-A simple library for creating interconnecting services using rabbitmq on the background.
+A simple library for creating interconnecting services using RabbitMQ on the background. Will make the pubsub pattern
+seamlessly available between different processes. Minimalist API is designed to be easy to learn and flexible enough
+for most tasks.
 
 # Install
 
@@ -38,42 +40,39 @@ A simple library for creating interconnecting services using rabbitmq on the bac
 
 Install RabbitMQ on the machine and create following scripts:
 
-Service 1 (Adding Service):
-```
-var service = require("esticade")("Adding Service");
+Service 1 (Multiplication Service):
+```javascript
+var service = require("esticade")("Multiplication Service");
 
-service.on("AddNumber", (ev) => ev.emit("AddedNumbers", {
-    firstNumber: ev.body.firstNumber,
-    secondNumber: ev.body.secondNumber
-    result: ev.body.firstNumber + ev.body.secondNumber
+service.on("MultiplyNumbers", (ev) => ev.emit("MultipliedNumbers", {
+    a: ev.body.a,
+    b: ev.body.b,
+    result: ev.body.a * ev.body.b
 }));
 ```
 
 Service 2 (Number generator):
-```
+```javascript
 var service = require("esticade")("Number Generator Service");
 
-setInterval(() => service.emit("AddNumber", {firstNumber: Math.random(), secondNumber: Math.random()});
+setInterval(() => service.emit("MultiplyNumbers", {a: Math.random() * 10, b: Math.random() * 10}), 1000);
 ```
 
 Service 3 (Result displayer):
-```
+```javascript
 var service = require("esticade")("Result Displayer");
 
-service.on("AddedNumbers", (ev) => {
-    console.log("Got result and it is: " + ev.body.result))
-})
+service.on("MultipliedNumbers", (ev) => console.log(ev.body.a + " + " + ev.body.b + " = " + ev.body.result));
 ```
 
 One time script (Request based method):
-```
+```javascript
 var service = require("esticade")("Request Service");
 
-service.emitChain("AddNumbers", {firstNumber: 10, secondNumber: 20})
-    .on("AddedNumbers", (ev) => {
-        console.log(ev.body.firstNumber + " + " + ev.body.secondNumber + " = " + ev.body.result))
-        service.shutdown();
-    }
+service.emitChain("MultiplyNumbers", {a: 10, b: 20})
+    .on("MultipliedNumbers", (ev) => {
+        console.log(ev.body.a + " + " + ev.body.b + " = " + ev.body.result)
+    })
     .execute();
 ```
 
@@ -95,7 +94,7 @@ JSON object with any of the following properties:
 - `engraved` - Default `false`. Will make named queues (those registered with service.on()) durable. We suggest you leave this
 option to `false` during development as otherwise you will get a lot of permanent queues in the rabbitmq server. You should
 turn this on in production though, as it will make sure no messages get lost when service restarts. Turning it off when it
-has been turned on might cause errors as the durable queues are not redefined as non durable ones automatically. You have
+has been turned on might cause errors as the durable queues are not redefined as non-durable automatically. You have
 to manually delete the queues from RabbitMQ.
 
 Example:

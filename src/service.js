@@ -1,10 +1,12 @@
 var emit = require("./emit");
 var emission = require("./emission");
 var on = require("./on");
-var transport = require("./amqp");
+var AMQP = require("./amqp");
 var event = require('./event');
 
 module.exports = function(serviceName){
+    var transport = AMQP();
+
     if(!serviceName){
         throw new Error("Service name must be given as an argument");
     }
