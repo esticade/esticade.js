@@ -11,23 +11,20 @@ module.exports = function(serviceName){
         throw new Error("Service name must be given as an argument");
     }
 
-    var emitChannel = transport.getChannel();
+    var channel = transport.getChannel();
 
     return {
         on: function(eventName, callback){
-            var channel = transport.getChannel();
             return on(channel, "*." + eventName, callback, serviceName + "-" + eventName)
         },
         alwaysOn: function(eventName, callback){
-            var channel = transport.getChannel();
             return on(channel, "*." + eventName, callback)
         },
         emit: function(eventName, payload){
-            return emit(event(eventName, payload), emitChannel);
+            return emit(event(eventName, payload), channel);
         },
         emitChain: function(eventName, payload){
-            var channelPromise = transport.getChannel();
-            return emission(event(eventName, payload), channelPromise);
+            return emission(event(eventName, payload), channel);
         },
         shutdown: function(){
             transport.shutdown();
