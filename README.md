@@ -84,8 +84,8 @@ for RabbitMQ. If you want to override that, you can override it with a configura
 
 - A file pointed to by ESTICADERC environment variable
 - esticade.json in current working folder or any parent folder.
-- /etc/esticade/esticaderc
 - .esticaderc in current user home directory
+- /etc/esticade/esticaderc
 
 If any of those files is located in that order, it's contents are read and used for configuration. It should contain
 JSON object with any of the following properties: 
