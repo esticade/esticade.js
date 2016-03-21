@@ -4,7 +4,7 @@
   "description": "Fast and simple pubsub library for microservices.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "node_modules/.bin/mocha test"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/esticade/esticade.js#readme",
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
   },
   "dependencies": {
     "amqplib": "^0.4.1",
