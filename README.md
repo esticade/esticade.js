@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/esticade/esticade.js.svg?branch=master)](https://travis-ci.org/esticade/esticade.js)
+
 # Esticade
  
 A simple library for creating interconnecting services using RabbitMQ on the background. Will make the pubsub pattern
