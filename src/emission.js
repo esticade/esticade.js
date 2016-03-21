@@ -27,6 +27,9 @@ function emission(event, channelPromise){
 
             return emission;
         },
+        timeout: function () {
+            return emission.timeOut(a, b);
+        },
         execute: function(){
             var emitted = when.all(dependencies).then(function(){
                 return emit(event, channelPromise);

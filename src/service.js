@@ -4,6 +4,7 @@ var on = require("./on");
 var AMQP = require("./amqp");
 var event = require('./event');
 
+
 module.exports = function(serviceName){
     var transport = AMQP();
 
@@ -15,23 +16,11 @@ module.exports = function(serviceName){
 
     return {
         on: function(eventName, callback){
-
-            if(!eventName){
-                throw new Error("Event name must be specified");
-            }
-
-            if(!callback){
-                throw new Error("Callback must be provided");
-            }
-
-            if(typeof callback != "function"){
-                throw new Error("Callback must be a function");
-            }
-
-
+            validateOn(eventName, callback);
             return on(channel, "*." + eventName, callback, serviceName + "-" + eventName)
         },
         alwaysOn: function(eventName, callback){
+            validateOn(eventName, callback);
             return on(channel, "*." + eventName, callback)
         },
         emit: function(eventName, payload){
@@ -41,7 +30,21 @@ module.exports = function(serviceName){
             return emission(event(eventName, payload), channel);
         },
         shutdown: function(){
-            transport.shutdown();
+            return transport.shutdown();
         }
     };
+};
+
+function validateOn(eventName, callback) {
+    if (!eventName) {
+        throw new Error("Event name must be specified");
+    }
+
+    if (!callback) {
+        throw new Error("Callback must be provided");
+    }
+
+    if (typeof callback != "function") {
+        throw new Error("Callback must be a function");
+    }
 }

@@ -2,7 +2,9 @@ var expect = require("chai").expect;
 var esticade = require("../index");
 var service;
 
-describe("esticade", function () {
+describe("Main Scaffolding test", function () {
+    after(function(done){ service.shutdown().then(done); });
+
     it("should be a function", function () {
         expect(esticade).to.be.a("function");
     });
@@ -12,7 +14,7 @@ describe("esticade", function () {
     });
 
     it("should return service object when calling", function () {
-        service = esticade("Service Name");
+        service = esticade("UnitTestService: main");
         expect(service).to.be.an("object");
     });
 
@@ -36,6 +38,6 @@ describe("esticade", function () {
             expect(service).to.have.property("shutdown")
                 .that.is.a("function");
         });
+    });
 
-    })
 });

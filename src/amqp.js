@@ -18,8 +18,8 @@ function getTransport()
     }
 
     function shutdown(){
-        connected.then(function (connection) {
-            connection.close();
+        return connected.then(function (connection) {
+            return connection.close();
         })
     }
 
