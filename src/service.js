@@ -3,6 +3,7 @@ var emission = require("./emission");
 var on = require("./on");
 var AMQP = require("./amqp");
 var event = require('./event');
+var when = require("when");
 
 
 module.exports = function(serviceName){
@@ -30,7 +31,9 @@ module.exports = function(serviceName){
             return emission(event(eventName, payload), channel);
         },
         shutdown: function(){
-            return transport.shutdown();
+            return when.promise((done) => {
+                setTimeout(() =>transport.shutdown().then(done), 500); // Give some time to drain
+            });
         }
     };
 };

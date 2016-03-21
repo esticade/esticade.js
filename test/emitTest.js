@@ -19,7 +19,7 @@ describe("Emit Test", function(){
             var promise = service.emit("TestEvent");
             expect(promise).to.be.an("object").and.have.property("then");
             promise.then(function () {
-                done()
+                done();
             })
         });
     })

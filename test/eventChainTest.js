@@ -16,13 +16,14 @@ describe("Event Chain Test", function(){
             expect(()=>service.emitChain()).to.throw("Event name must be specified");
         });
 
-        it("Should return an emission object with required properties", function () {
+        it("Should return an emission object with required properties", function (done) {
             var emission = service.emitChain("EmitChainTestEvent")
             expect(emission).to.be.an("object");
             expect(emission).to.have.property("on").which.is.a("function");
             expect(emission).to.have.property("execute").which.is.a("function");
             expect(emission).to.have.property("timeOut").which.is.a("function");
             expect(emission).to.have.property("timeout").which.is.a("function");
+            emission.execute().then(() => { done() });
         });
 
         it("Should be able to emit a regular event", function(done){
@@ -97,17 +98,17 @@ describe("Event Chain Test", function(){
         describe("timeout", () => {
             it("should stop callback from being called if event arrive later than timeout time", (done)=>{
                 service.emitChain("TestTimeout")
-                    .timeout(100)
-                    .on("TestTimeoutTriggeredEvent", () => { expect(false).to.be.true; })
-                    .execute()
-                    .then(() => {
+                    .timeout(300)
+                    .on("TestTimeout", (ev) => {
                         setTimeout(() => {
-                            service.emit("TestTimeoutTriggeredEvent");
+                            ev.emit("TestTimeoutTriggeredEvent");
                         }, 500);
                         setTimeout(() => {
                             done();
                         }, 1000);
-                    });
+                    })
+                    .on("TestTimeoutTriggeredEvent", () => { expect("This should never be evaluated").to.be.false; })
+                    .execute();
             })
         })
     })
