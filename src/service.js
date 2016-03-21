@@ -15,6 +15,20 @@ module.exports = function(serviceName){
 
     return {
         on: function(eventName, callback){
+
+            if(!eventName){
+                throw new Error("Event name must be specified");
+            }
+
+            if(!callback){
+                throw new Error("Callback must be provided");
+            }
+
+            if(typeof callback != "function"){
+                throw new Error("Callback must be a function");
+            }
+
+
             return on(channel, "*." + eventName, callback, serviceName + "-" + eventName)
         },
         alwaysOn: function(eventName, callback){

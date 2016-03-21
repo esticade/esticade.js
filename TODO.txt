@@ -1,5 +1,6 @@
 TODO
 ~~~~
 
+- Create a proper listener pool for event chain
 - Ping handler
 

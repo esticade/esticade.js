@@ -3,6 +3,10 @@ var uuid = require('node-uuid');
 var currentServiceCorrBlock = uuid.v4();
 
 function createEvent(eventName, payload, parentEvent) {
+    if(!eventName){
+        throw new Error("Event name must be specified");
+    }
+
     var correlationId, correlationBlock, parentId;
     if (parentEvent) {
         correlationId = parentEvent.correlationId;
