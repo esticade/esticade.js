@@ -35,6 +35,17 @@ describe("Event Chain Test", function(){
             });
         });
 
+        it("Should be able to it's own event", function(done){
+            var testRequest = { a: "abc", n: Math.random() };
+
+            service.emitChain("SelfEmitTest", testRequest)
+                .on("SelfEmitTest", (ev) => {
+                    expect(ev.body).to.deep.equal(testRequest);
+                    done();
+                })
+                .execute();
+        });
+
         it("Should be able to catch response from a separate handler service", function(done){
             var testRequest = { a: "abc", n: Math.random() };
             var testResponse = { b: "def", n: Math.random() };
@@ -80,6 +91,23 @@ describe("Event Chain Test", function(){
 
             when.all([a.promise, b.promise, c.promise]).then(() => {
                 done();
+            })
+        });
+
+        describe("timeout", () => {
+            it("should stop callback from being called if event arrive later than timeout time", (done)=>{
+                service.emitChain("TestTimeout")
+                    .timeout(100)
+                    .on("TestTimeoutTriggeredEvent", () => { expect(false).to.be.true; })
+                    .execute()
+                    .then(() => {
+                        setTimeout(() => {
+                            service.emit("TestTimeoutTriggeredEvent");
+                        }, 500);
+                        setTimeout(() => {
+                            done();
+                        }, 1000);
+                    });
             })
         })
     })

@@ -27,7 +27,7 @@ function emission(event, channelPromise){
 
             return emission;
         },
-        timeout: function () {
+        timeout: function (a, b) {
             return emission.timeOut(a, b);
         },
         execute: function(){
