@@ -2,7 +2,7 @@ var uuid = require('node-uuid');
 
 var currentServiceCorrBlock = uuid.v4();
 
-function createEvent(eventName, payload, parentEvent) {
+function createEvent(serviceName, eventName, payload, parentEvent) {
     if(!eventName){
         throw new Error("Event name must be specified");
     }
@@ -23,7 +23,8 @@ function createEvent(eventName, payload, parentEvent) {
         eventId: uuid.v4(),
         parentId: parentId,
         name: eventName,
-        body: payload
+        body: payload,
+        service: serviceName
     };
 
     return event;

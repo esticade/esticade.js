@@ -23,10 +23,14 @@ describe("Event Test", () => {
                         { name: "correlationId", type: "string"},
                         { name: "correlationBlock", type: "string"},
                         { name: "eventId", type: "string"},
+                        { name: "service", type: "string", value: "UnitTestService: emitTest"}
                     ];
 
                     expectedProperties.forEach((prop) =>{
                         expect(ev).to.have.property(prop.name).which.is.a(prop.type);
+                        if(prop.value){
+                            expect(ev[prop.name]).to.equal(prop.value)
+                        }
                     });
 
                     done();

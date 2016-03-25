@@ -93,7 +93,7 @@ function emission(event, channelPromise){
         var callbacks = {};
         callbacks[uid] = callback;
 
-        var promise = on(channelPromise, routingKey, function(ev){
+        var promise = on(event.service, channelPromise, routingKey, function(ev){
             var eventUid = ev.correlationId + "." + eventName;
             _.each(callbacks, (cb, uid) => {
                 if(eventUid == uid) cb(ev);

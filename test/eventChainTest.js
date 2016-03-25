@@ -36,7 +36,7 @@ describe("Event Chain Test", function(){
             });
         });
 
-        it("Should be able to it's own event", function(done){
+        it("Should be able to catch it's own event", function(done){
             var testRequest = { a: "abc", n: Math.random() };
 
             service.emitChain("SelfEmitTest", testRequest)
