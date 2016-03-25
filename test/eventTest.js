@@ -14,12 +14,12 @@ describe("Event Test", () => {
 
     describe("event", ()=>{
         it("should contain all required properties", (done) =>{
-            service.emitChain("EventTest", {})
+            service.emitChain("EventTest", { a: 1 })
                 .on("EventTest", (ev) => {
                     var expectedProperties = [
                         { name: "emit", type: "function"},
-                        { name: "name", type: "string"},
-                        { name: "body", type: "object"},
+                        { name: "name", type: "string", value: "EventTest"},
+                        { name: "body", type: "object", value: { a: 1 }},
                         { name: "correlationId", type: "string"},
                         { name: "correlationBlock", type: "string"},
                         { name: "eventId", type: "string"},
@@ -29,7 +29,7 @@ describe("Event Test", () => {
                     expectedProperties.forEach((prop) =>{
                         expect(ev).to.have.property(prop.name).which.is.a(prop.type);
                         if(prop.value){
-                            expect(ev[prop.name]).to.equal(prop.value)
+                            expect(ev[prop.name]).to.deep.equal(prop.value)
                         }
                     });
 
