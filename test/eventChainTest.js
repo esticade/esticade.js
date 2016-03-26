@@ -105,7 +105,7 @@ describe("Event Chain Test", function(){
                         }, 500);
                         setTimeout(() => {
                             done();
-                        }, 1000);
+                        }, 600);
                     })
                     .on("TestTimeoutTriggeredEvent", () => { expect("This should never be evaluated").to.be.false; })
                     .execute();
