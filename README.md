@@ -105,7 +105,7 @@ Example:
 
 ```
 { 
-    "connectionURL": "amqp://user:pass@example.com/vhost"
+    "connectionURL": "amqp://user:pass@example.com/vhost",
     "exchange": "EventNetwork"
 }
 ```
