@@ -5,6 +5,30 @@ var _ = require("underscore");
 
 module.exports = getConfig();
 
+function getFromEnv(env, defaultValue) {
+    return process.env[env] || defaultValue;
+}
+
+
+function getBooleanFromEnv(env, defaultValue) {
+    var value = process.env[env];
+
+    if(!value) {
+        return defaultValue;
+    }
+
+    value = value.toLowerCase();
+    return !!(value == "yes" || value == "on" || value == "true")
+}
+
+function applyEnvironmentOverrides(config) {
+    return {
+        connectionURL: getFromEnv("ESTICADE_CONNECTION_URL", config.connectionURL),
+        exchange: getFromEnv("ESTICADE_EXCHANGE", config.exchange),
+        engraved: getBooleanFromEnv("ENGRAVED", config.engraved)
+    }
+}
+
 function getConfig() {
     var config = {
         connectionURL: "amqp://guest:guest@localhost/",
@@ -17,6 +41,9 @@ function getConfig() {
     if (configFile) {
         _.extend(config, JSON.parse(fs.readFileSync(configFile)));
     }
+
+    config = applyEnvironmentOverrides(config);
+
     return config;
 }
 

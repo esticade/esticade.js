@@ -85,6 +85,7 @@ service.emitChain("MultiplyNumbers", {a: 10, b: 20})
 By default the library will try to connect to localhost with user and pass guest/guest. This is the default configuration
 for RabbitMQ. If you want to override that, you can override it with a configuration file in any of following locations.
 
+- Environment variables for each of the configuration variables
 - A file pointed to by ESTICADERC environment variable
 - esticade.json in current working folder or any parent folder.
 - .esticaderc in current user home directory
@@ -109,3 +110,9 @@ Example:
     "exchange": "EventNetwork"
 }
 ```
+
+## Environment variables
+
+- `ESTICADE_CONNECTION_URL` - AMQP url to connect to
+- `ESTICADE_EXCHANGE` - Exchange name
+- `ESTICADE_ENGRAVED` - Whether or not to engrave the queues 
