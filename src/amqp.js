@@ -1,9 +1,35 @@
 var amqp = require('amqplib');
 var config = require("./config")
+var when = require("when");
 
 function getTransport()
 {
-    var connected = amqp.connect(config.connectionURL).then(null, console.warn);
+    var timeoutAmount = 1;
+    const maxTimeout = 512;
+
+    function errorOut(msg) {
+        setTimeout(() => { throw new Error(msg) });
+    }
+
+    function getConnection(){
+        return amqp.connect(config.connectionURL)
+            .catch(function () {
+                var deferred = when.defer();
+
+                if(timeoutAmount >= maxTimeout) {
+                    errorOut("ESTICADE: Failed connecting and max retry timeout achieved.")
+                }
+
+                console.log("ESTICADE: Failed connecting, retrying in", timeoutAmount);
+                setTimeout(() => {
+                    deferred.resolve(getConnection());
+                    timeoutAmount += timeoutAmount;
+                }, timeoutAmount * 1000);
+                return deferred.promise;
+            });
+    }
+
+    var connected = getConnection();
 
     function getChannel(){
         return connected.then(function (conn) {
@@ -19,7 +45,7 @@ function getTransport()
 
     function shutdown(){
         return connected.then(function (connection) {
-            return connection.close();
+            return connection.close().catch();
         })
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "esticade",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Fast and simple pubsub library for microservices.",
   "main": "index.js",
   "scripts": {
