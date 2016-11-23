@@ -1,7 +1,6 @@
 var homedir = require("homedir");
 var path = require("path");
 var fs = require("fs");
-var _ = require("underscore");
 
 module.exports = getConfig();
 
@@ -39,7 +38,7 @@ function getConfig() {
     var configFile = getConfigFile();
 
     if (configFile) {
-        _.extend(config, JSON.parse(fs.readFileSync(configFile)));
+        Object.assign(config, JSON.parse(fs.readFileSync(configFile)));
     }
 
     config = applyEnvironmentOverrides(config);

@@ -1,7 +1,6 @@
 var when = require("when");
 var emit = require("./emit");
 var on = require("./on");
-var _ = require("underscore");
 
 var listeners = {};
 var setTimeOutHandle;
@@ -77,8 +76,9 @@ function emission(event, channelPromise){
     }
 
     function clearCallbacks(event){
-        _.each(listeners, (listener) => {
-            _.each(listener.callbacks, (cb, name) => {
+        Object.keys(listeners).forEach((key) => {
+            let listener = listeners[key];
+            Object.keys(listener.callbacks).forEach((name) => {
                 if(name.match(event.correlationId + ".*")) {
                     delete listener.callbacks[name];
                 };
@@ -95,8 +95,8 @@ function emission(event, channelPromise){
 
         var promise = on(event.service, channelPromise, routingKey, function(ev){
             var eventUid = ev.correlationId + "." + eventName;
-            _.each(callbacks, (cb, uid) => {
-                if(eventUid == uid) cb(ev);
+            Object.keys(callbacks).forEach((uid) => {
+                if(eventUid == uid) callbacks[uid](ev);
             });
         });
 
