@@ -1,3 +1,5 @@
+'use strict';
+
 var when = require("when");
 var emit = require("./emit");
 var on = require("./on");

@@ -1,3 +1,5 @@
+'use strict';
+
 var amqp = require('amqplib');
 var config = require("./config")
 var when = require("when");

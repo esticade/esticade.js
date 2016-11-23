@@ -1,3 +1,5 @@
+'use strict';
+
 var uuid = require('uuid');
 
 var currentServiceCorrBlock = uuid.v4();

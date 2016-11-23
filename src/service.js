@@ -1,3 +1,5 @@
+'use strict';
+
 var emit = require("./emit");
 var emission = require("./emission");
 var on = require("./on");

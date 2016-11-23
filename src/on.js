@@ -1,6 +1,7 @@
+'use strict';
+
 var eventObject = require("./eventObject");
 var config = require("./config");
-
 
 function on(serviceName, haveChan, routingKey, callback, queueName){
     return haveChan.then(function (channel) {

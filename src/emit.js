@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require("./config");
 
 function emit(event, haveChan) {

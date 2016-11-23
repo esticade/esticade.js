@@ -1,3 +1,5 @@
+'use strict';
+
 var homedir = require("homedir");
 var path = require("path");
 var fs = require("fs");

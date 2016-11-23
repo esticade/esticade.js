@@ -1,3 +1,5 @@
+'use strict';
+
 var emit = require("./emit");
 var createEvent = require("./event");
 
