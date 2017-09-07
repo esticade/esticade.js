@@ -1,6 +1,5 @@
 'use strict';
 
-var when = require("when");
 var emit = require("./emit");
 var on = require("./on");
 
@@ -32,7 +31,7 @@ function emission(event, channelPromise){
             return emission.timeOut(a, b);
         },
         execute: function(){
-            var emitted = when.all(dependencies).then(function(){
+            var emitted = Promise.all(dependencies).then(function(){
                 return emit(event, channelPromise);
             });
 

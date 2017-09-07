@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 var esticade = require("../index");
-var when = require("when");
+var Deferred = require("../src/deferred");
 var service;
 
 describe("Event Chain Test", function(){
@@ -65,9 +65,9 @@ describe("Event Chain Test", function(){
         });
 
         it("Should be able to handle multiple different responses", function(done){
-            var a = when.defer(),
-                b = when.defer(),
-                c = when.defer();
+            var a = new Deferred(),
+                b = new Deferred(),
+                c = new Deferred();
 
             service.on("MultiResponseTest", (ev) => {
                 ev.emit("MultiResponseTest-Reply1", 1);
@@ -90,7 +90,7 @@ describe("Event Chain Test", function(){
                     .execute();
             });
 
-            when.all([a.promise, b.promise, c.promise]).then(() => {
+            Promise.all([a.promise, b.promise, c.promise]).then(() => {
                 done();
             })
         });
