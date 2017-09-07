@@ -16,7 +16,11 @@ for most tasks.
 
 ## Service object
 
-- `on(eventName, callback)` - Will register event listener. Callback will be called with an `Event` object as the only argument. If there are two or more instances of the same service running, the events will be equally divided between all the instances. If this is not a desired behaviour use `alwaysOn`. Will return promise that is fulfilled once the handler is registered.
+- `on(eventName, callback)` - Will register event listener. Callback will be called with an `Event` object as the only argument. 
+If there are two or more instances of the same service running, the events will be equally divided between all the instances. 
+If this is not a desired behaviour use `alwaysOn`. Will return promise that is fulfilled once the handler is registered.
+If Promise is returned inside on handler, the message is acknowledged when promise is resolved. If promise is Rejected or exception
+is thrown inside the on handler the message is nack'ed with small delay which usually means the message is requeued.
 - `alwaysOn(eventName, callback)` - Same as `on`, except different instances of the same services will all return the event.   
 - `emit(eventName, payload)` - Will emit event to the event network. Returns promise that is fulfilled once the event is emitted.
 - `emitChain(eventName, payload)` - Will create an emit chain, allowing events caused by this event to be listened to. Will return `EventChain` object. Note that the event is not triggered before `execute` is called on the event chain.
