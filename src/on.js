@@ -7,10 +7,14 @@ function on(serviceName, haveChan, routingKey, callback, queueName){
     return haveChan.then(function (channel) {
         return channel.assertQueue(queueName, getQueueOptions(queueName)).then(function (queue) {
             channel.bindQueue(queue.queue, config.exchange, routingKey);
-            return channel.consume(queue.queue, (msg) => {
-                callback(eventObject(serviceName, haveChan, JSON.parse(msg.content.toString())));
-                channel.ack(msg);
-            });
+            return channel.consume(queue.queue, (msg) =>
+                new Promise((resolve) => resolve(callback(eventObject(serviceName, haveChan, JSON.parse(msg.content.toString())))))
+                    .then(() => channel.ack(msg))
+                    .catch((error) => {
+                        console.error("ESTICADE: message rejected by on handler: " +queueName)
+                        setTimeout(() => channel.nack(msg), 1000)
+                    })
+            );
         });
     });
 }
