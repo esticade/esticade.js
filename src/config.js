@@ -26,7 +26,7 @@ function applyEnvironmentOverrides(config) {
     return {
         connectionURL: getFromEnv("ESTICADE_CONNECTION_URL", config.connectionURL),
         exchange: getFromEnv("ESTICADE_EXCHANGE", config.exchange),
-        engraved: getBooleanFromEnv("ENGRAVED", config.engraved)
+        engraved: getBooleanFromEnv("ESTICADE_ENGRAVED", config.engraved)
     }
 }
 
