@@ -36,6 +36,7 @@ function getTransport()
             var channelCreated = conn.createChannel();
 
             channelCreated.then(function (channel) {
+                channel.prefetch(config.prefetch)
                 channel.assertExchange(config.exchange, "topic", {durable: true, autoDelete: false})
             });
 

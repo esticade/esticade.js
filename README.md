@@ -105,6 +105,7 @@ option to `false` during development as otherwise you will get a lot of permanen
 turn this on in production though, as it will make sure no messages get lost when service restarts. Turning it off when it
 has been turned on might cause errors as the durable queues are not redefined as non-durable automatically. You have
 to manually delete the queues from RabbitMQ.
+- `prefetch` - Change the prefetch setting (default 100). Read more about it here: https://www.rabbitmq.com/consumer-prefetch.html
 
 Example:
 
@@ -119,4 +120,5 @@ Example:
 
 - `ESTICADE_CONNECTION_URL` - AMQP url to connect to
 - `ESTICADE_EXCHANGE` - Exchange name
-- `ESTICADE_ENGRAVED` - Whether or not to engrave the queues 
+- `ESTICADE_ENGRAVED` - Whether or not to engrave the queues
+- `ESTICADE_PREFETCH` - Change the prefetch setting (default 100) https://www.rabbitmq.com/consumer-prefetch.html
