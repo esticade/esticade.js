@@ -106,6 +106,7 @@ turn this on in production though, as it will make sure no messages get lost whe
 has been turned on might cause errors as the durable queues are not redefined as non-durable automatically. You have
 to manually delete the queues from RabbitMQ.
 - `prefetch` - Change the prefetch setting (default 100). Read more about it here: https://www.rabbitmq.com/consumer-prefetch.html
+- `logging` - Enable or disable logging (boolean) [default: false]
 
 Example:
 
