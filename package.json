@@ -1,6 +1,6 @@
 {
   "name": "esticade",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Fast and simple pubsub library for microservices.",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/esticade/esticade.js#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^5.2.0"
   },
   "dependencies": {
     "amqplib": "^0.5.1",
