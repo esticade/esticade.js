@@ -11,7 +11,9 @@ function on(serviceName, haveChan, routingKey, callback, queueName){
                 new Promise((resolve) => resolve(callback(eventObject(serviceName, haveChan, JSON.parse(msg.content.toString())))))
                     .then(() => channel.ack(msg))
                     .catch((error) => {
-                        console.error("ESTICADE: message rejected by on handler: " +queueName)
+                        if (config.logging) {
+                            console.error("ESTICADE: message rejected by on handler: " + queueName)
+                        }
                         setTimeout(() => channel.nack(msg), 1000)
                     })
             );

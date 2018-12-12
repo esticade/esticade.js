@@ -121,4 +121,5 @@ Example:
 - `ESTICADE_CONNECTION_URL` - AMQP url to connect to
 - `ESTICADE_EXCHANGE` - Exchange name
 - `ESTICADE_ENGRAVED` - Whether or not to engrave the queues
-- `ESTICADE_PREFETCH` - Change the prefetch setting (default 100) https://www.rabbitmq.com/consumer-prefetch.html
+- `ESTICADE_PREFETCH` - Change the prefetch setting [default 100] https://www.rabbitmq.com/consumer-prefetch.html
+- `ESTICADE_LOGGING_ENABLED` - Enable or disable logging (boolean) [default: false]

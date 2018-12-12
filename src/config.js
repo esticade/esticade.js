@@ -27,7 +27,8 @@ function applyEnvironmentOverrides(config) {
         connectionURL: getFromEnv("ESTICADE_CONNECTION_URL", config.connectionURL),
         exchange: getFromEnv("ESTICADE_EXCHANGE", config.exchange),
         engraved: getBooleanFromEnv("ESTICADE_ENGRAVED", config.engraved),
-        prefetch: parseInt(getFromEnv("ESTICADE_PREFETCH", config.prefetch))
+        prefetch: parseInt(getFromEnv("ESTICADE_PREFETCH", config.prefetch)),
+        logging: getBooleanFromEnv("ESTICADE_LOGGING_ENABLED", config.logging)
     }
 }
 
@@ -36,7 +37,8 @@ function getConfig() {
         connectionURL: "amqp://guest:guest@localhost/",
         exchange: "events",
         engraved: false,
-        prefetch: 100
+        prefetch: 100,
+        logging: false
     };
 
     var configFile = getConfigFile();
