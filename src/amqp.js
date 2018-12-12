@@ -20,7 +20,10 @@ function getTransport()
                         errorOut("ESTICADE: Failed connecting and max retry timeout achieved.")
                     }
 
-                    console.log("ESTICADE: Failed connecting, retrying in", timeoutAmount);
+                    if (config.logging) {
+                        console.error("ESTICADE: Failed connecting, retrying in", timeoutAmount);
+                    }
+
                     setTimeout(() => {
                         resolve(getConnection());
                         timeoutAmount += timeoutAmount;
