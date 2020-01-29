@@ -1,62 +1,32 @@
 'use strict';
 
-var amqp = require('amqplib');
-var config = require("./config")
+const amqp = require('amqp-connection-manager');
+const config = require('./config')
 
-function getTransport()
-{
-    var timeoutAmount = 1;
-    const maxTimeout = 512;
+function getTransport() {
+  function getConnection() {
+    return amqp.connect(config.connectionURL)
+  }
 
-    function errorOut(msg) {
-        setTimeout(() => { throw new Error(msg) });
-    }
+  const connection = getConnection();
 
-    function getConnection(){
-        return amqp.connect(config.connectionURL)
-            .catch(function () {
-                return new Promise((resolve => {
-                    if(timeoutAmount >= maxTimeout) {
-                        errorOut("ESTICADE: Failed connecting and max retry timeout achieved.")
-                    }
+  function getChannel() {
+    return connection.createChannel({
+      setup(channel) {
+        channel.assertExchange(config.exchange, 'topic', {durable: true, autoDelete: false})
+        channel.prefetch(config.prefetch)
+      }
+    })
+  }
 
-                    if (config.logging) {
-                        console.error("ESTICADE: Failed connecting, retrying in", timeoutAmount);
-                    }
+  function shutdown() {
+    return connection.close()
+  }
 
-                    setTimeout(() => {
-                        resolve(getConnection());
-                        timeoutAmount += timeoutAmount;
-                    }, timeoutAmount * 1000);
-                }))
-            });
-    }
-
-    var connected = getConnection();
-
-    function getChannel(){
-        return connected.then(function (conn) {
-            var channelCreated = conn.createChannel();
-
-            channelCreated.then(function (channel) {
-                channel.assertExchange(config.exchange, "topic", {durable: true, autoDelete: false})
-                channel.prefetch(config.prefetch)
-            });
-
-            return channelCreated;
-        });
-    }
-
-    function shutdown(){
-        return connected.then(function (connection) {
-            return connection.close().catch();
-        })
-    }
-
-    return {
-        getChannel: getChannel,
-        shutdown: shutdown
-    }
+  return {
+    getChannel: getChannel,
+    shutdown: shutdown
+  }
 }
 
 module.exports = getTransport;

@@ -1,35 +1,33 @@
 'use strict';
 
-var uuid = require('uuid');
+const uuid = require('uuid');
 
-var currentServiceCorrBlock = uuid.v4();
+const currentServiceCorrBlock = uuid.v4();
 
 function createEvent(serviceName, eventName, payload, parentEvent) {
-    if(!eventName){
-        throw new Error("Event name must be specified");
-    }
+  if (!eventName) {
+    throw new Error('Event name must be specified');
+  }
 
-    var correlationId, correlationBlock, parentId;
-    if (parentEvent) {
-        correlationId = parentEvent.correlationId;
-        correlationBlock = parentEvent.correlationBlock;
-        parentId = parentEvent.eventId;
-    } else {
-        correlationId = uuid.v4();
-        correlationBlock = currentServiceCorrBlock;
-    }
+  let correlationId, correlationBlock, parentId;
+  if (parentEvent) {
+    correlationId = parentEvent.correlationId;
+    correlationBlock = parentEvent.correlationBlock;
+    parentId = parentEvent.eventId;
+  } else {
+    correlationId = uuid.v4();
+    correlationBlock = currentServiceCorrBlock;
+  }
 
-    var event = {
-        correlationId: correlationId,
-        correlationBlock: correlationBlock,
-        eventId: uuid.v4(),
-        parentId: parentId,
-        name: eventName,
-        body: payload,
-        service: serviceName
-    };
-
-    return event;
+  return {
+      correlationId: correlationId,
+      correlationBlock: correlationBlock,
+      eventId: uuid.v4(),
+      parentId: parentId,
+      name: eventName,
+      body: payload,
+      service: serviceName
+  };
 }
 
 module.exports = createEvent;
