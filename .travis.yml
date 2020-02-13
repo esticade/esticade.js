@@ -3,7 +3,7 @@ node_js:
 - '8'
 - '12'
 services:
-- rabbitmq
+- rabbitmq-server
 deploy:
   provider: npm
   email: clysuva@gmail.com
