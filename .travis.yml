@@ -2,8 +2,12 @@ language: node_js
 node_js:
 - '8'
 - '12'
+dist: xenial
+addons:
+  packages:
+    - rabbitmq-server
 services:
-- rabbitmq-server
+  - rabbitmq
 deploy:
   provider: npm
   email: clysuva@gmail.com
