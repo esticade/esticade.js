@@ -4,8 +4,9 @@ node_js:
 - '12'
 dist: xenial
 addons:
-  packages:
-    - rabbitmq-server
+  apt:
+    packages:
+      - rabbitmq-server
 services:
   - rabbitmq
 deploy:
